@@ -50,7 +50,7 @@ The system supports powerful querying capabilities using **SPARQL**, which explo
 
 ## Case Studies and Demonstrations
 
-A case study involving a hypothetical property insurer demonstrates how CRO-powered knowledge graphs can:
+A case study involving a hypothetical property insurer demonstrates how CRO-powered knowledge graphs (example knowledge graph.ttl) can:
 *   **Reconcile modeled and incurred losses**.
 *   **Track patterns in non-modeled risks**.
 *   Support the development of **Retrieval-Augmented Generation (RAG) systems powered by LLMs** for catastrophe risk analytics and management.
@@ -64,8 +64,5 @@ The Catastrophe Risk Ontology (CRO) is published in TTL (“Terse RDF Triple Lan
 *   **Ontology TTL format**: [https://w3id.org/catrisk/ontology/](https://w3id.org/catrisk/ontology/)
 *   **Supporting documentation and examples**: [https://github.com/catriskscientist/catrisk-ontology](https://github.com/catriskscientist/catrisk-ontology)
 
-## Future Work
-
-Future work aims to build on this foundation by creating a **family of application-specific ontologies**, tailored to particular stakeholders or use cases (e.g., reinsurers, brokers, ILS firms), in collaboration with subject-matter experts. Integration with Large Language Models (LLMs) is a promising frontier, exploring how LLMs can **extract, structure, and codify valuable information from unstructured sources** (e.g., reports, documentation, adjuster notes) to further enhance the knowledge graph itself.
 
 ---
