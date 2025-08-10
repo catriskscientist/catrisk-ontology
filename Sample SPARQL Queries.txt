@@ -1,0 +1,203 @@
+# 0. List all cat models, perils and their domain regions, availability
+
+q0 = """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX cro: <https://w3id.org/catrisk/ontology#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?modelid ?catmodelname ?peril ?modeldomain ?availability_start ?availability_end
+
+WHERE {
+       
+       ?catmodel rdf:type cro:CatastropheModel .
+       ?catmodel cro:catModelID ?modelid .
+       ?catmodel cro:catModelName ?catmodelname .
+       ?catmodel cro:catModelPeril ?peril .
+       ?catmodel cro:hasModelDomainRegion ?catdomain .
+       ?catdomain cro:catDomainDescription ?modeldomain .
+       ?catmodel cro:catModelAvailabilityStart ?availability_start .
+       ?catmodel cro:catModelAvailabilityEnd ?availability_end .
+
+   }
+"""
+
+
+# 1. List events, associated perils and peril factors in 2018 
+
+q1 = """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX cro: <https://w3id.org/catrisk/ontology#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?year ?eventname ?perilname ?perilfactor
+
+WHERE {
+       
+       ?event rdf:type cro:Event .
+       ?event cro:eventName ?eventname .
+       ?event cro:eventYear ?year .
+
+       ?event cro:hasEventPerilMap ?epmap .
+       ?epmap cro:hasPeril ?peril .
+       ?peril cro:perilName ?perilname .
+       ?epmap cro:hasFactorValue ?perilfactor .
+       
+       FILTER(?year = 2018)
+       
+       }
+"""
+
+# 2. Get event losses between in 2020 by peril, region, country. Indicate modeled or not.
+
+q2 = """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX cro: <https://w3id.org/catrisk/ontology#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?eventLoss ?year ?modeled ?peril ?lob ?country ?eventname (SUM(?grossLoss) AS ?totalloss)
+
+WHERE {
+  ?eventLoss rdf:type cro:EventLoss .
+  ?eventLoss cro:hasGrossIncurredLoss ?grossLoss .
+  ?eventLoss cro:isModeledLoss ?modeled .
+  ?eventLoss cro:hasLossCountry ?country .
+  
+  ?eventLoss cro:eventLossOf ?event .
+  ?event cro:eventName ?eventname .
+  
+  ?eventLoss cro:loss_ylpr ?ylpr .
+  ?ylpr cro:hasYearAttribute ?year .
+  ?ylpr cro:hasPerilAttribute ?peril .
+  ?ylpr cro:hasLOBAttribute ?lob .
+  FILTER(?year = 2020)
+}
+"""
+
+
+#3. list portfolio AALs for lob = COMMERCIAL, perilcode = WW1 and all regions. Filter for peril code WW1 which is Windstorm. 
+
+q3 = """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX cro: <https://w3id.org/catrisk/ontology#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?tag ?year ?perilcode ?lobname ?regioncode (SUM(?modeledAAL) AS ?modeled_AAL)
+WHERE { 
+       ?ylpr rdf:type cro:ylpr .
+       ?ylpr cro:ylpr_tag ?tag .
+       ?ylpr cro:hasYearAttribute ?year .
+
+       ?ylpr cro:hasPerilAttribute ?peril .
+       ?peril cro:perilCode ?perilcode .    
+       
+       ?ylpr cro:hasLOBAttribute ?lob .
+       ?lob cro:lobName ?lobname .       
+       
+       ?ylpr cro:hasRegionAttribute ?lossregion .
+       ?lossregion cro:lossRegionCode ?regioncode .       
+
+       ?ylpr cro:hasRelevantModeledLoss ?mloss .
+       ?mloss cro:analysisLevel ?analysislevel .
+       ?mloss cro:hasAAL ?aal .
+       ?aal rdf:type cro:PortfolioAAL .
+       ?aal cro:meanvalue ?modeledAAL .
+       FILTER(?perilcode = "WW1" && ?lobname = "COMMERCIAL" && ?analysislevel = "portfolio")
+  
+    }
+
+GROUP BY ?tag ?year ?perilcode ?lobname ?regioncode
+"""
+
+
+#4. compare incurred vs modeled portfolio AALs for lob = COMMERCIAL, perilcode = WW1 and all regions. Filter for peril code WW1 which is Windstorm
+
+q4 = """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX cro: <https://w3id.org/catrisk/ontology#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?tag ?year ?perilcode ?lobname ?regioncode 
+       (SUM(?grossLossSum) AS ?incurred_loss) 
+       (SUM(?modeledAALSum) AS ?modeled_AAL)
+
+WHERE {
+
+  # Gross Loss subquery
+  {
+    SELECT ?ylpr (SUM(?grossLoss) AS ?grossLossSum)
+    WHERE {
+      ?ylpr cro:hasRelevantEventLoss ?eventloss .
+      ?eventloss cro:hasGrossIncurredLoss ?grossLoss .
+    }
+    GROUP BY ?ylpr
+  }
+
+  # Modeled AAL subquery
+  {
+    SELECT ?ylpr (SUM(?modeledAALValue) AS ?modeledAALSum)
+    WHERE {
+      ?ylpr cro:hasRelevantModeledLoss ?mloss .
+      ?mloss cro:analysisLevel ?analysislevel .
+      ?mloss cro:hasAAL ?aal .
+      ?aal rdf:type cro:PortfolioAAL .
+      ?aal cro:meanvalue ?modeledAALValue .
+      FILTER(?analysislevel = "portfolio")
+    }
+    GROUP BY ?ylpr
+  }
+
+  # Now attach the dimension attributes
+  ?ylpr rdf:type cro:ylpr .
+  ?ylpr cro:ylpr_tag ?tag .
+  ?ylpr cro:hasYearAttribute ?year .
+
+  ?ylpr cro:hasPerilAttribute ?peril .
+  ?peril cro:perilCode ?perilcode .    
+
+  ?ylpr cro:hasLOBAttribute ?lob .
+  ?lob cro:lobName ?lobname .       
+
+  ?ylpr cro:hasRegionAttribute ?lossregion .
+  ?lossregion cro:lossRegionCode ?regioncode .       
+
+  FILTER(?regioncode = "US" && ?perilcode = "WW1" && ?lobname = "COMMERCIAL")
+}
+
+GROUP BY ?tag ?year ?perilcode ?lobname ?regioncode
+
+"""
+
+
+#5. Get incurred losses by LOB for 2020 Woolsey wildfire. Search for woolsey in event names.
+
+q5 = """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX cro: <https://w3id.org/catrisk/ontology#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?eventname ?lobname ?grossloss
+
+WHERE {
+       ?event rdf:type cro:Event .
+       ?event cro:eventName ?eventname .
+       FILTER(CONTAINS(LCASE(STR(?eventname)), "woolsey"))
+       
+       ?event cro:hasEventLossRecord ?eventloss .
+       ?eventloss cro:hasPeril ?peril .
+       ?peril cro:perilCode ?perilcode .
+       FILTER(?perilcode = "BB1")
+       
+       ?eventloss cro:hasLOB ?lob .
+       ?lob cro:lobName ?lobname .
+
+        ?eventloss cro:hasGrossIncurredLoss ?grossloss .              
+       
+       }
+    GROUP BY ?eventname ?lobname
+"""
