@@ -1,6 +1,4 @@
-Here is a README file for a GitHub ontology page, specifically for the Catastrophe Risk Ontology (CRO), drawing on the provided sources:
 
----
 
 # Catastrophe Risk Ontology (CRO)
 
