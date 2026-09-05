@@ -1,0 +1,10 @@
+# Normalize line endings for text; leave binaries alone
+* text=auto eol=lf
+
+*.xlsx  binary
+*.docx  binary
+
+# Notebooks and RDF are text, but keep them out of GitHub's language stats
+*.ipynb linguist-documentation
+*.ttl   linguist-data
+*.csv   linguist-data

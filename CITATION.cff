@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "If you use this data or code, please cite the accompanying paper."
+title: >-
+  Data and code companion: Catastrophe Risk Ontology and Hurricane Loss
+  Normalization
+abstract: >-
+  The Catastrophe Risk Ontology (CRO), a populated example knowledge graph,
+  worked SPARQL queries, a natural-language "chat with your graph" pipeline, and
+  the hurricane claims- and loss-normalization datasets and analysis used in the
+  paper.
+type: dataset
+authors:
+  - family-names: Tadinada
+    given-names: Sashi Kanth
+license: CC-BY-4.0
+url: "https://github.com/catriskscientist/catrisk-ontology"
+identifiers:
+  - type: url
+    value: "https://w3id.org/catrisk/ontology/"
+    description: Persistent identifier for the Catastrophe Risk Ontology
+keywords:
+  - catastrophe risk
+  - ontology
+  - knowledge graph
+  - SPARQL
+  - hurricane loss normalization
+  - Bayesian calibration
+preferred-citation:
+  type: article
+  title: "Ontologies for Catastrophe Risk Management and Analytics"
+  authors:
+    - family-names: Tadinada
+      given-names: Sashi Kanth
+  year: 2026
+  notes: "Manuscript under review"
