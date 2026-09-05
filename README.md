@@ -147,10 +147,10 @@ foundation for the normalization method in the paper.
   and runs a Bayesian/MCMC calibration of the scaling factor **κ** that reconciles the
   model distribution with the observed record (including KDE tail-fidelity validation).
 
-  Requirements: Python 3, Jupyter, and `numpy`, `pandas`, `matplotlib`, `scipy` (and a
-  PyMC/MCMC stack as imported in the notebook's setup cell). Run from inside the
-  `Hurricane Loss Normalization with MCMC/` directory so `ylt.csv` is found by relative
-  path.
+  Requirements: Python 3, Jupyter, and `numpy`, `pandas`, `matplotlib`, `scipy`. The
+  Metropolis-Hastings sampler is hand-rolled with NumPy — no PyMC or other MCMC package
+  is needed. Run from inside the `Hurricane Loss Normalization with MCMC/` directory so
+  `ylt.csv` is found by relative path.
 
 ---
 
