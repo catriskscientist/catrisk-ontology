@@ -11,6 +11,22 @@
 @prefix vann: <http://purl.org/vocab/vann/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+<https://w3id.org/catrisk/ontology> a owl:Ontology ;
+    rdfs:label "Catastrophe Risk Ontology" ;
+    rdfs:comment "An ontology to describe key concepts and relationships in catastrophe property insurance modeling, including exposure, events, losses, perils, and portfolios." ;
+    dcterms:creator [ a sdo:Person ;
+            sdo:name "Sashi Kanth Tadinada, PhD" ;
+            sdo:affiliation "NFP, Inc." ;
+            sdo:email "tadinadasashi@gmail.com"^^xsd:string ] ;
+    dcterms:created "2026-09-26"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/ont/geosparql>,
+        <http://www.w3.org/2006/time> ;
+    vann:author "Sashi Kanth Tadinada"^^xsd:string ;
+    vann:preferredNamespacePrefix "cro"^^xsd:string ;
+    vann:preferredNamespaceUri "https://w3id.org/catrisk/ontology#"^^xsd:anyURI ;
+    owl:versionIRI <https://w3id.org/catrisk/ontology/1.0.0> .
+
+
 geo:Feature a rdfs:Class,
         owl:Class ;
     rdfs:isDefinedBy geo:,
@@ -656,11 +672,9 @@ geo:spatialDimension a rdf:Property,
     skos:example spec11:C.1.2.3 ;
     skos:prefLabel "spatial dimension"@en .
 
-<http://www.w3.org/2006/time> rdfs:label "Tiempo en OWL"@es ;
-    dcterms:contributor <https://orcid.org/0000-0001-8269-8171> .
-
 time:Friday a time:DayOfWeek ;
     rdfs:label "Friday"@en ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     skos:prefLabel "الجمعة"@ar,
         "Freitag"@de,
         "Friday"@en,
@@ -677,6 +691,7 @@ time:Friday a time:DayOfWeek ;
 time:January a owl:Class,
         owl:DeprecatedClass ;
     rdfs:label "January" ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:hasValue time:unitMonth ;
             owl:onProperty time:unitType ],
@@ -689,6 +704,7 @@ time:January a owl:Class,
 
 time:Monday a time:DayOfWeek ;
     rdfs:label "Monday"@en ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     skos:prefLabel "الاثنين"@ar,
         "Montag"@de,
         "Monday"@en,
@@ -704,6 +720,7 @@ time:Monday a time:DayOfWeek ;
 
 time:Saturday a time:DayOfWeek ;
     rdfs:label "Saturday"@en ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     skos:prefLabel "السبت"@ar,
         "Samstag"@de,
         "Saturday"@en,
@@ -719,6 +736,7 @@ time:Saturday a time:DayOfWeek ;
 
 time:Sunday a time:DayOfWeek ;
     rdfs:label "Sunday"@en ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     skos:prefLabel "الأحد (يوم)"@ar,
         "Sonntag"@de,
         "Sunday"@en,
@@ -734,6 +752,7 @@ time:Sunday a time:DayOfWeek ;
 
 time:Thursday a time:DayOfWeek ;
     rdfs:label "Thursday"@en ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     skos:prefLabel "الخميس"@ar,
         "Donnerstag"@de,
         "Thursday"@en,
@@ -749,6 +768,7 @@ time:Thursday a time:DayOfWeek ;
 
 time:Tuesday a time:DayOfWeek ;
     rdfs:label "Tuesday"@en ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     skos:prefLabel "الثلاثاء"@ar,
         "Dienstag"@de,
         "Tuesday"@en,
@@ -764,6 +784,7 @@ time:Tuesday a time:DayOfWeek ;
 
 time:Wednesday a time:DayOfWeek ;
     rdfs:label "Wednesday"@en ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     skos:prefLabel "الأربعاء"@ar,
         "Mittwoch"@de,
         "Wednesday"@en,
@@ -781,6 +802,7 @@ time:Year a owl:Class,
         owl:DeprecatedClass ;
     rdfs:label "Year"@en ;
     rdfs:comment "Year duration" ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:cardinality "0"^^xsd:nonNegativeInteger ;
             owl:onProperty time:days ],
@@ -828,6 +850,7 @@ time:generalDay a rdfs:Datatype ;
 Note that the value-space is not defined, so a generic OWL2 processor cannot compute ordering relationships of values of this type."""@en,
         """Día del mes - formulado como una cadena de texto con una restricción patrón para reproducir la misma forma léxica que gDay, excepto que se permiten valores hasta el 99, con el propósito de proporcionar soporte a calendarios con meses con más de 31 días.
             Nótese que el espacio de valores no está definido, por tanto, un procesador genérico de OWL2 no puede computar relaciones de orden de valores de este tipo."""@es ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     owl:onDatatype xsd:string ;
     owl:withRestrictions ( [ xsd:pattern "---(0[1-9]|[1-9][0-9])(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?" ] ) ;
     skos:definition """Day of month - formulated as a text string with a pattern constraint to reproduce the same lexical form as gDay, except that values up to 99 are permitted, in order to support calendars with more than 31 days in a month. 
@@ -842,6 +865,7 @@ time:generalMonth a rdfs:Datatype ;
 Note that the value-space is not defined, so a generic OWL2 processor cannot compute ordering relationships of values of this type."""@en,
         """Mes del año - formulado como una cadena de texto con una restricción patrón para reproducir la misma forma léxica que gMonth, excepto que se permiten valores hasta el 20, con el propósito de proporcionar soporte a calendarios con años con más de 12 meses.
             Nótese que el espacio de valores no está definido, por tanto, un procesador genérico de OWL2 no puede computar relaciones de orden de valores de este tipo."""@es ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     owl:onDatatype xsd:string ;
     owl:withRestrictions ( [ xsd:pattern "--(0[1-9]|1[0-9]|20)(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?" ] ) ;
     skos:definition """Month of year - formulated as a text string with a pattern constraint to reproduce the same lexical form as gMonth, except that values up to 20 are permitted, in order to support calendars with more than 12 months in the year. 
@@ -856,6 +880,7 @@ time:generalYear a rdfs:Datatype ;
 Note that the value-space is not defined, so a generic OWL2 processor cannot compute ordering relationships of values of this type."""@en,
         """Número de año - formulado como una cadena de texto con una restricción patrón para reproducir la misma forma léxica que gYear, aunque no está restringido a valores del calendario gregoriano.
             Nótese que el espacio de valores no está definido, por tanto, un procesador genérico de OWL2 no puede computar relaciones de orden de valores de este tipo."""@es ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     owl:onDatatype xsd:string ;
     owl:withRestrictions ( [ xsd:pattern "-?([1-9][0-9]{3,}|0[0-9]{3})(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?" ] ) ;
     skos:definition """Year number - formulated as a text string with a pattern constraint to reproduce the same lexical form as gYear, but not restricted to values from the Gregorian calendar. 
@@ -869,6 +894,7 @@ time:hasBeginning a owl:ObjectProperty ;
     rdfs:comment "Beginning of a temporal entity"@en,
         "Comienzo de una entidad temporal."@es ;
     rdfs:domain time:TemporalEntity ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:Instant ;
     rdfs:subPropertyOf time:hasTime ;
     skos:definition "Beginning of a temporal entity."@en,
@@ -880,6 +906,7 @@ time:hasDateTimeDescription a owl:ObjectProperty ;
     rdfs:comment "Value of DateTimeInterval expressed as a structured value. The beginning and end of the interval coincide with the limits of the shortest element in the description."@en,
         "Valor de intervalo de fecha-hora expresado como un valor estructurado. El principio y el final del intervalo coincide con los límites del elemento más corto en la descripción."@es ;
     rdfs:domain time:DateTimeInterval ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:GeneralDateTimeDescription ;
     skos:definition "Value of DateTimeInterval expressed as a structured value. The beginning and end of the interval coincide with the limits of the shortest element in the description."@en,
         "Valor de intervalo de fecha-hora expresado como un valor estructurado. El principio y el final del intervalo coincide con los límites del elemento más corto en la descripción."@es .
@@ -889,6 +916,7 @@ time:hasDuration a owl:ObjectProperty ;
         "tiene duración"@es ;
     rdfs:comment "Duration of a temporal entity, expressed as a scaled value or nominal value"@en,
         "Duración de una entidad temporal, expresada como un valor escalado o un valor nominal."@es ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:Duration ;
     rdfs:subPropertyOf time:hasTemporalDuration ;
     skos:definition "Duration of a temporal entity, event or activity, or thing, expressed as a scaled value"@en,
@@ -899,6 +927,7 @@ time:hasDurationDescription a owl:ObjectProperty ;
         "tiene descripción de duración"@es ;
     rdfs:comment "Duration of a temporal entity, expressed using a structured description"@en,
         "Duración de una entidad temporal, expresada utilizando una descripción estructurada."@es ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:GeneralDurationDescription ;
     rdfs:subPropertyOf time:hasTemporalDuration ;
     skos:definition "Duration of a temporal entity, expressed using a structured description"@en,
@@ -910,6 +939,7 @@ time:hasEnd a owl:ObjectProperty ;
     rdfs:comment "End of a temporal entity."@en,
         "Final de una entidad temporal."@es ;
     rdfs:domain time:TemporalEntity ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:Instant ;
     rdfs:subPropertyOf time:hasTime ;
     skos:definition "End of a temporal entity."@en,
@@ -921,6 +951,7 @@ time:hasXSDDuration a owl:DatatypeProperty ;
     rdfs:comment "Extent of a temporal entity, expressed using xsd:duration"@en,
         "Extensión de una entidad temporal, expresada utilizando xsd:duration."@es ;
     rdfs:domain time:TemporalEntity ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range xsd:duration ;
     skos:definition "Extent of a temporal entity, expressed using xsd:duration"@en,
         "Extensión de una entidad temporal, expresada utilizando xsd:duration."@es ;
@@ -933,6 +964,7 @@ time:inDateTime a owl:ObjectProperty ;
     rdfs:comment "Position of an instant, expressed using a structured description"@en,
         "Posición de un instante, expresada utilizando una descripción estructurada."@es ;
     rdfs:domain time:Instant ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:GeneralDateTimeDescription ;
     rdfs:subPropertyOf time:inTemporalPosition ;
     skos:definition "Position of an instant, expressed using a structured description"@en,
@@ -944,6 +976,7 @@ time:inTimePosition a owl:ObjectProperty ;
     rdfs:comment "Position of an instant, expressed as a temporal coordinate or nominal value"@en,
         "Posición de un instante, expresada como una coordenada temporal o un valor nominal."@es ;
     rdfs:domain time:Instant ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:TimePosition ;
     rdfs:subPropertyOf time:inTemporalPosition ;
     skos:definition "Position of a time instant expressed as a TimePosition"@en,
@@ -955,6 +988,7 @@ time:inXSDDate a owl:DatatypeProperty ;
     rdfs:comment "Position of an instant, expressed using xsd:date"@en,
         "Posición de un instante, expresado utilizando xsd:date."@es ;
     rdfs:domain time:Instant ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range xsd:date ;
     skos:definition "Position of an instant, expressed using xsd:date"@en,
         "Posición de un instante, expresado utilizando xsd:date."@es .
@@ -966,6 +1000,7 @@ time:inXSDDateTime a owl:DatatypeProperty,
     rdfs:comment "Position of an instant, expressed using xsd:dateTime"@en,
         "Posición de un instante, expresado utilizando xsd:dateTime."@es ;
     rdfs:domain time:Instant ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range xsd:dateTime ;
     owl:deprecated true ;
     skos:definition "Position of an instant, expressed using xsd:dateTime"@en,
@@ -979,6 +1014,7 @@ time:inXSDDateTimeStamp a owl:DatatypeProperty ;
     rdfs:comment "Position of an instant, expressed using xsd:dateTimeStamp"@en,
         "Posición de un instante, expresado utilizando xsd:dateTimeStamp."@es ;
     rdfs:domain time:Instant ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range xsd:dateTimeStamp ;
     skos:definition "Position of an instant, expressed using xsd:dateTimeStamp"@en,
         "Posición de un instante, expresado utilizando xsd:dateTimeStamp."@es .
@@ -989,6 +1025,7 @@ time:inXSDgYear a owl:DatatypeProperty ;
     rdfs:comment "Position of an instant, expressed using xsd:gYear"@en,
         "Posición de un instante, expresado utilizando xsd:gYear."@es ;
     rdfs:domain time:Instant ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range xsd:gYear ;
     skos:definition "Position of an instant, expressed using xsd:gYear"@en,
         "Posición de un instante, expresado utilizando xsd:gYear."@es .
@@ -999,6 +1036,7 @@ time:inXSDgYearMonth a owl:DatatypeProperty ;
     rdfs:comment "Position of an instant, expressed using xsd:gYearMonth"@en,
         "Posición de un instante, expresado utilizando xsd:gYearMonth."@es ;
     rdfs:domain time:Instant ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range xsd:gYearMonth ;
     skos:definition "Position of an instant, expressed using xsd:gYearMonth"@en,
         "Posición de un instante, expresado utilizando xsd:gYearMonth."@es .
@@ -1009,12 +1047,14 @@ time:inside a owl:ObjectProperty ;
     rdfs:comment "An instant that falls inside the interval. It is not intended to include beginnings and ends of intervals."@en,
         "Un instante que cae dentro del intervalo. Se asume que no es ni el principio ni el final de ningún intervalo."@es ;
     rdfs:domain time:Interval ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:Instant ;
     skos:definition "An instant that falls inside the interval. It is not intended to include beginnings and ends of intervals."@en,
         "Un instante que cae dentro del intervalo. Se asume que no es ni el principio ni el final de ningún intervalo."@es .
 
 time:unitCentury a time:TemporalUnit ;
     rdfs:label "Century (unit of temporal duration)"@en ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     skos:prefLabel "قرن واحد"@ar,
         "Jahrhundert"@de,
         "century"@en,
@@ -1038,6 +1078,7 @@ time:unitCentury a time:TemporalUnit ;
 
 time:unitDay a time:TemporalUnit ;
     rdfs:label "Day (unit of temporal duration)"@en ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     skos:prefLabel "يوماً ما"@ar,
         "Tag"@de,
         "day"@en,
@@ -1060,6 +1101,7 @@ time:unitDay a time:TemporalUnit ;
 
 time:unitDecade a time:TemporalUnit ;
     rdfs:label "Decade (unit of temporal duration)"@en ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     skos:prefLabel "عقد واحد"@ar,
         "Dekade"@de,
         "decade"@en,
@@ -1083,6 +1125,7 @@ time:unitDecade a time:TemporalUnit ;
 
 time:unitHour a time:TemporalUnit ;
     rdfs:label "Hour (unit of temporal duration)"@en ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     skos:prefLabel "ساعة واحدة"@ar,
         "Stunde"@de,
         "hour"@en,
@@ -1106,6 +1149,7 @@ time:unitHour a time:TemporalUnit ;
 
 time:unitMillenium a time:TemporalUnit ;
     rdfs:label "Century (unit of temporal duration)"@en ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     skos:prefLabel "الألفية"@ar,
         "Jahrtausend"@de,
         "millenium"@en,
@@ -1129,6 +1173,7 @@ time:unitMillenium a time:TemporalUnit ;
 
 time:unitMinute a time:TemporalUnit ;
     rdfs:label "Minute (unit of temporal duration)"@en ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     skos:prefLabel "دقيقة واحدة"@ar,
         "Minute"@de,
         "minute"@en,
@@ -1152,6 +1197,7 @@ time:unitMinute a time:TemporalUnit ;
 
 time:unitSecond a time:TemporalUnit ;
     rdfs:label "Second (unit of temporal duration)"@en ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     skos:prefLabel "ثانية واحدة"@ar,
         "Sekunde"@de,
         "second"@en,
@@ -1174,6 +1220,7 @@ time:unitSecond a time:TemporalUnit ;
 
 time:unitWeek a time:TemporalUnit ;
     rdfs:label "Week (unit of temporal duration)"@en ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     skos:prefLabel "سبوع واحد"@ar,
         "Woche"@de,
         "week"@en,
@@ -1197,6 +1244,7 @@ time:unitWeek a time:TemporalUnit ;
 
 time:unitYear a time:TemporalUnit ;
     rdfs:label "Year (unit of temporal duration)"@en ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     skos:prefLabel "سنة واحدة"@ar,
         "Jahr"@de,
         "year"@en,
@@ -1225,23 +1273,11 @@ time:xsdDateTime a owl:DatatypeProperty,
     rdfs:comment "Value of DateTimeInterval expressed as a compact value."@en,
         "Valor de 'intervalo de fecha-hora' expresado como un valor compacto."@es ;
     rdfs:domain time:DateTimeInterval ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range xsd:dateTime ;
     owl:deprecated true ;
     skos:note "Utilizando xsd:dateTime en este lugar significa que la duración del intervalo está implícita: se corresponde con la longitud del elemento más pequeño distinto de cero del literal fecha-hora. Sin embargo, esta regla no se puede utilizar para intervalos cuya duración es mayor que un rango más pequeño que el tiempo de comienzo - p.ej. el primer minuto o segundo del día, la primera hora del mes, o el primer día del año. En estos casos el intervalo deseado no se puede distinguir del intervalo correspondiente al próximo rango más alto. Debido a esta ambigüedad esencial, no se recomienda el uso de esta propiedad y está desaprobada.",
         "Using xsd:dateTime in this place means that the duration of the interval is implicit: it corresponds to the length of the smallest non-zero element of the date-time literal. However, this rule cannot be used for intervals whose duration is more than one rank smaller than the starting time - e.g. the first minute or second of a day, the first hour of a month, or the first day of a year. In these cases the desired interval cannot be distinguished from the interval corresponding to the next rank up. Because of this essential ambiguity, use of this property is not recommended and it is deprecated."@en .
-
-<https://w3id.org/catrisk/ontology> a owl:Ontology ;
-    rdfs:label "Catastrophe Risk Ontology" ;
-    rdfs:comment "An ontology to describe key concepts and relationships in catastrophe property insurance modeling, including exposure, events, losses, perils, and portfolios." ;
-    dcterms:contributor [ a sdo:Person ;
-            sdo:affiliation "NFP, Inc." ;
-            sdo:email "tadinadasashi@gmail.com"^^xsd:string ;
-            sdo:name "Sashi Kanth Tadinada, PhD" ] ;
-	dcterms:created "2025-08-07"^^xsd:date ;
-	vann:preferredNamespacePrefix "cro"^^xsd:string ;
-	vann:preferredNamespaceUri "https://w3id.org/catrisk/ontology#"^^xsd:anyURI ;
-	owl:versionIRI <https://w3id.org/catrisk/ontology/1.0.0> .
-	
 
 cro:AccountAAL rdfs:label "Account AAL" ;
     rdfs:comment "Account Average Annual Loss from cat modeling" ;
@@ -1249,10 +1285,6 @@ cro:AccountAAL rdfs:label "Account AAL" ;
 
 cro:AreaCode rdfs:label "Area Code" ;
     rdfs:comment "A code that uniquely identifies a geographic subregion or administrative boundary used in exposure or loss modeling." ;
-    rdfs:subClassOf cro:AdminBoundary .
-
-cro:County rdfs:label "County" ;
-    rdfs:comment "County" ;
     rdfs:subClassOf cro:AdminBoundary .
 
 cro:IBNR a rdf:Property,
@@ -1280,10 +1312,6 @@ cro:PortfolioAAL rdfs:label "Portfolio AAL" ;
 cro:ScenarioModelingRecord rdfs:label "Scenario Modeling Record" ;
     rdfs:comment "Exposure accumulation or loss output corresponding to a scenario modeling analysis" ;
     rdfs:subClassOf cro:AnalysisOutput .
-
-cro:ZipCode rdfs:label "Postal Code" ;
-    rdfs:comment "Postal Code" ;
-    rdfs:subClassOf cro:AdminBoundary .
 
 cro:adminBoundaryCategory a rdf:Property,
         owl:FunctionalProperty ;
@@ -1451,6 +1479,27 @@ cro:completenessRatio a rdf:Property,
     rdfs:comment "Ratio indicating the completeness of claim reporting for the event." ;
     rdfs:domain cro:EventClaim ;
     rdfs:range xsd:float .
+
+cro:containsCountry a rdf:Property ;
+    rdfs:label "Contains Country" ;
+    rdfs:comment "Relates a feature collection to a country it contains." ;
+    rdfs:domain geo:FeatureCollection ;
+    rdfs:range cro:Country ;
+    rdfs:subPropertyOf cro:containsFeature .
+
+cro:containsCounty a rdf:Property ;
+    rdfs:label "Contains County" ;
+    rdfs:comment "Relates a feature collection to a county it contains." ;
+    rdfs:domain geo:FeatureCollection ;
+    rdfs:range cro:County ;
+    rdfs:subPropertyOf cro:containsFeature .
+
+cro:containsZip a rdf:Property ;
+    rdfs:label "Contains Zip" ;
+    rdfs:comment "Relates a feature collection to a ZIP code area it contains." ;
+    rdfs:domain geo:FeatureCollection ;
+    rdfs:range cro:ZipCode ;
+    rdfs:subPropertyOf cro:containsFeature .
 
 cro:coveredBy a rdf:Property,
         owl:InverseFunctionalProperty ;
@@ -1621,7 +1670,22 @@ cro:hasClaimLossCountry a rdf:Property,
     rdfs:label "Has Claim Loss Country" ;
     rdfs:comment "Indicates the country where the claim loss occurred." ;
     rdfs:domain cro:EventClaim ;
-    rdfs:range cro:Country .
+    rdfs:range cro:Country ;
+    rdfs:subPropertyOf cro:hasClaimLossFeature .
+
+cro:hasClaimLossCounty a rdf:Property ;
+    rdfs:label "Has Claim Loss County" ;
+    rdfs:comment "County where the event claim loss occurred." ;
+    rdfs:domain cro:EventClaim ;
+    rdfs:range cro:County ;
+    rdfs:subPropertyOf cro:hasClaimLossFeature .
+
+cro:hasClaimLossZip a rdf:Property ;
+    rdfs:label "Has Claim Loss Zip" ;
+    rdfs:comment "ZIP code area where the event claim loss occurred." ;
+    rdfs:domain cro:EventClaim ;
+    rdfs:range cro:ZipCode ;
+    rdfs:subPropertyOf cro:hasClaimLossFeature .
 
 cro:hasClaimRecord a rdf:Property,
         owl:InverseFunctionalProperty ;
@@ -2185,6 +2249,7 @@ time:DurationDescription a owl:Class ;
         "descripción de duración"@es ;
     rdfs:comment "Description of temporal extent structured with separate values for the various elements of a calendar-clock system. The temporal reference system is fixed to Gregorian Calendar, and the range of each of the numeric properties is restricted to xsd:decimal"@en,
         "Descripción de extensión temporal estructurada con valores separados para los distintos elementos de un sistema de horario-calendario. El sistema de referencia temporal se fija al calendario gregoriano, y el intervalo de cada una de las propiedades numéricas se restringe a xsd:decimal."@es ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:allValuesFrom xsd:decimal ;
             owl:onProperty time:months ],
@@ -2220,6 +2285,7 @@ time:MonthOfYear a owl:Class ;
         "mes del año"@es ;
     rdfs:comment "The month of the year"@en,
         "El mes del año."@es ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:cardinality "0"^^xsd:nonNegativeInteger ;
             owl:onProperty time:day ],
@@ -2260,6 +2326,7 @@ time:TRS a owl:Class ;
 This is a stub class, representing the set of all temporal reference systems."""@en,
         """Un sistema de referencia temporal, tal como un sistema de coordenadas temporales (con un origen, una dirección y una escala), una combinación calendario-reloj, o un sistema ordinal (posiblemente jerárquico).
         Esta clase comodín representa el conjunto de todos los sistemas de referencia temporal."""@es ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     skos:definition """A temporal reference system, such as a temporal coordinate system (with an origin, direction, and scale), a calendar-clock combination, or a (possibly hierarchical) ordinal system. 
 
 This is a stub class, representing the set of all temporal reference systems."""@en,
@@ -2277,6 +2344,7 @@ The region where it applies and the offset from UTC are specified by a locally r
         """Un huso horario especifica la cantidad en que la hora local está desplazada con respecto a UTC.
         Un huso horario normalmente se denota geográficamente (p.ej. el horario de verano del este de Australia), con un valor constante en una región dada.
         La región donde aplica y el desplazamiento desde UTC las especifica una autoridad gubernamental localmente reconocida."""@es ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     skos:definition """A Time Zone specifies the amount by which the local time is offset from UTC. 
 	A time zone is usually denoted geographically (e.g. Australian Eastern Daylight Time), with a constant value in a given region. 
 The region where it applies and the offset from UTC are specified by a locally recognised governing authority."""@en,
@@ -2308,6 +2376,7 @@ time:dayOfWeek a owl:ObjectProperty ;
     rdfs:comment "El día de la semana, cuyo valor es un miembro de la clase 'día de la semana'.",
         "The day of week, whose value is a member of the class time:DayOfWeek"@en ;
     rdfs:domain time:GeneralDateTimeDescription ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:DayOfWeek ;
     skos:definition "The day of week, whose value is a member of the class time:DayOfWeek"@en,
         "El día de la semana, cuyo valor es un miembro de la clase 'día de la semana'."@es .
@@ -2318,6 +2387,7 @@ time:dayOfYear a owl:DatatypeProperty ;
     rdfs:comment "The number of the day within the year"@en,
         "El número de día en el año."@es ;
     rdfs:domain time:GeneralDateTimeDescription ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range xsd:nonNegativeInteger ;
     skos:definition "The number of the day within the year"@en,
         "El número de día en el año."@es .
@@ -2328,6 +2398,7 @@ time:intervalAfter a owl:ObjectProperty ;
     rdfs:comment "Si un intervalo propio T1 es posterior a otro intervalo propio T2, entonces el principio de T1 está después que el final de T2.",
         "If a proper interval T1 is intervalAfter another proper interval T2, then the beginning of T1 is after the end of T2."@en ;
     rdfs:domain time:ProperInterval ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:ProperInterval ;
     rdfs:subPropertyOf time:after,
         time:intervalDisjoint ;
@@ -2341,6 +2412,7 @@ time:intervalBefore a owl:ObjectProperty ;
     rdfs:comment "If a proper interval T1 is intervalBefore another proper interval T2, then the end of T1 is before the beginning of T2."@en,
         "Si un intervalo propio T1 está antes que otro intervalo propio T2, entonces el final de T1 está antes que el principio de T2."@es ;
     rdfs:domain time:ProperInterval ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:ProperInterval ;
     rdfs:subPropertyOf time:before,
         time:intervalDisjoint ;
@@ -2354,6 +2426,7 @@ time:intervalContains a owl:ObjectProperty ;
     rdfs:comment "If a proper interval T1 is intervalContains another proper interval T2, then the beginning of T1 is before the beginning of T2, and the end of T1 is after the end of T2."@en,
         "Si un intervalo propio T1 contiene otro intervalo propio T2, entonces el principio de T1 está antes que el principio de T2, y el final de T1 está después del final de T2."@es ;
     rdfs:domain time:ProperInterval ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:ProperInterval ;
     owl:inverseOf time:intervalDuring ;
     skos:definition "If a proper interval T1 is intervalContains another proper interval T2, then the beginning of T1 is before the beginning of T2, and the end of T1 is after the end of T2."@en,
@@ -2365,6 +2438,7 @@ time:intervalDuring a owl:ObjectProperty ;
     rdfs:comment "If a proper interval T1 is intervalDuring another proper interval T2, then the beginning of T1 is after the beginning of T2, and the end of T1 is before the end of T2."@en,
         "Si un intervalo propio T1 está durante otro intervalo propio T2, entonces del principio de T1 está después del principio de T2, y el final de T1 está antes que el final de T2."@es ;
     rdfs:domain time:ProperInterval ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:ProperInterval ;
     rdfs:subPropertyOf time:intervalIn ;
     owl:inverseOf time:intervalContains ;
@@ -2377,6 +2451,7 @@ time:intervalEquals a owl:ObjectProperty ;
     rdfs:comment "If a proper interval T1 is intervalEquals another proper interval T2, then the beginning of T1 is coincident with the beginning of T2, and the end of T1 is coincident with the end of T2."@en,
         "Si un intervalo propio T1 es igual a otro intervalo propio T2, entonces el principio de T1 coincide con el principio de T2, y el final de T1 coincide con el final de T2."@es ;
     rdfs:domain time:ProperInterval ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:ProperInterval ;
     owl:propertyDisjointWith time:intervalIn ;
     skos:definition "If a proper interval T1 is intervalEquals another proper interval T2, then the beginning of T1 is coincident with the beginning of T2, and the end of T1 is coincident with the end of T2."@en,
@@ -2388,6 +2463,7 @@ time:intervalFinishedBy a owl:ObjectProperty ;
     rdfs:comment "If a proper interval T1 is intervalFinishedBy another proper interval T2, then the beginning of T1 is before the beginning of T2, and the end of T1 is coincident with the end of T2."@en,
         "Si un intervalo propio T1 está terminado por otro intervalo propio T2, entonces el principio de T1 está antes que el principio de T2, y el final de T1 coincide con el final de T2."@es ;
     rdfs:domain time:ProperInterval ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:ProperInterval ;
     owl:inverseOf time:intervalFinishes ;
     skos:definition "If a proper interval T1 is intervalFinishedBy another proper interval T2, then the beginning of T1 is before the beginning of T2, and the end of T1 is coincident with the end of T2."@en,
@@ -2399,6 +2475,7 @@ time:intervalFinishes a owl:ObjectProperty ;
     rdfs:comment "If a proper interval T1 is intervalFinishes another proper interval T2, then the beginning of T1 is after the beginning of T2, and the end of T1 is coincident with the end of T2."@en,
         "Si un intervalo propio T1 termina otro intervalo propio T2, entonces del principio de T1 está después del principio de T2, y el final de T1 coincide con el final de T2."@es ;
     rdfs:domain time:ProperInterval ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:ProperInterval ;
     rdfs:subPropertyOf time:intervalIn ;
     owl:inverseOf time:intervalFinishedBy ;
@@ -2411,6 +2488,7 @@ time:intervalMeets a owl:ObjectProperty ;
     rdfs:comment "If a proper interval T1 is intervalMeets another proper interval T2, then the end of T1 is coincident with the beginning of T2."@en,
         "Si un intervalo propio T1 se encuentra con otro intervalo propio T2, entonces el final de T1 coincide con el principio de T2."@es ;
     rdfs:domain time:ProperInterval ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:ProperInterval ;
     owl:inverseOf time:intervalMetBy ;
     skos:definition "If a proper interval T1 is intervalMeets another proper interval T2, then the end of T1 is coincident with the beginning of T2."@en,
@@ -2422,6 +2500,7 @@ time:intervalMetBy a owl:ObjectProperty ;
     rdfs:comment "If a proper interval T1 is intervalMetBy another proper interval T2, then the beginning of T1 is coincident with the end of T2."@en,
         "Si un intervalo propio T1 es 'intervalo encontrado por' otro intervalo propio T2, entonces el principio de T1 coincide con el final de T2."@es ;
     rdfs:domain time:ProperInterval ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:ProperInterval ;
     owl:inverseOf time:intervalMeets ;
     skos:definition "If a proper interval T1 is intervalMetBy another proper interval T2, then the beginning of T1 is coincident with the end of T2."@en,
@@ -2433,6 +2512,7 @@ time:intervalOverlappedBy a owl:ObjectProperty ;
     rdfs:comment "If a proper interval T1 is intervalOverlappedBy another proper interval T2, then the beginning of T1 is after the beginning of T2, the beginning of T1 is before the end of T2, and the end of T1 is after the end of T2."@en,
         "Si un intervalo propio T1 es 'intervalo solapado por' otro intervalo propio T2, entonces el principio de T1 es posterior al principio de T2, y el principio de T1 es anterior al final de T2, y el final de T1 es posterior al final de T2."@es ;
     rdfs:domain time:ProperInterval ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:ProperInterval ;
     owl:inverseOf time:intervalOverlaps ;
     skos:definition "If a proper interval T1 is intervalOverlappedBy another proper interval T2, then the beginning of T1 is after the beginning of T2, the beginning of T1 is before the end of T2, and the end of T1 is after the end of T2."@en,
@@ -2445,6 +2525,7 @@ time:intervalOverlaps a owl:ObjectProperty ;
         "Asume una dirección en el tiempo. Si una entidad temporal T1 está después de otra entidad temporal T2, entonces el principio de T1 está después del final de T2."@es,
         "Si un intervalo propio T1 se solapa con otro intervalo propio T2, entonces el principio de T1 es anterior al principio de T2, el final de T1 es posterior al principio de T2, y el final de T1 es anterior al final de T2."@es ;
     rdfs:domain time:ProperInterval ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:ProperInterval ;
     owl:inverseOf time:intervalOverlappedBy ;
     skos:definition "If a proper interval T1 is intervalOverlaps another proper interval T2, then the beginning of T1 is before the beginning of T2, the end of T1 is after the beginning of T2, and the end of T1 is before the end of T2."@en,
@@ -2455,6 +2536,7 @@ time:intervalStartedBy a owl:ObjectProperty ;
     rdfs:comment "If a proper interval T1 is intervalStarted another proper interval T2, then the beginning of T1 is coincident with the beginning of T2, and the end of T1 is after the end of T2."@en,
         "Si un intervalo propio T1 es empezado por otro intervalo propio T2, entonces el principio de T1 coincide con el principio de T2, y el final de T1 es posterior al final de T2."@es ;
     rdfs:domain time:ProperInterval ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:ProperInterval ;
     owl:inverseOf time:intervalStarts ;
     skos:definition "If a proper interval T1 is intervalStarted another proper interval T2, then the beginning of T1 is coincident with the beginning of T2, and the end of T1 is after the end of T2."@en,
@@ -2466,6 +2548,7 @@ time:intervalStarts a owl:ObjectProperty ;
     rdfs:comment "If a proper interval T1 is intervalStarts another proper interval T2, then the beginning of T1 is coincident with the beginning of T2, and the end of T1 is before the end of T2."@en,
         "Si un intervalo propio T1 empieza otro intervalo propio T2, entonces del principio de T1 con el principio de T2, y el final de T1 es anterior al final de T2."@es ;
     rdfs:domain time:ProperInterval ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:ProperInterval ;
     rdfs:subPropertyOf time:intervalIn ;
     owl:inverseOf time:intervalStartedBy ;
@@ -2478,6 +2561,7 @@ time:monthOfYear a owl:ObjectProperty ;
     rdfs:comment "The month of the year, whose value is a member of the class time:MonthOfYear"@en,
         "El mes del año, cuyo valor es un miembro de la clase 'mes del año'."@es ;
     rdfs:domain time:GeneralDateTimeDescription ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:MonthOfYear ;
     skos:definition "The month of the year, whose value is a member of the class time:MonthOfYear"@en,
         "El mes del año, cuyo valor es un miembro de la clase 'mes del año'."@es ;
@@ -2490,6 +2574,7 @@ time:nominalPosition a owl:DatatypeProperty ;
     rdfs:comment "The (nominal) value indicating temporal position in an ordinal reference system "@en,
         "El valor (nominal) que indica posición temporal en un sistema de referencia ordinal."@es ;
     rdfs:domain time:TimePosition ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range xsd:string ;
     skos:definition "The (nominal) value indicating temporal position in an ordinal reference system "@en,
         "El valor (nominal) que indica posición temporal en un sistema de referencia ordinal."@es .
@@ -2500,6 +2585,7 @@ time:numericDuration a owl:DatatypeProperty ;
     rdfs:comment "Value of a temporal extent expressed as a decimal number scaled by a temporal unit"@en,
         "Valor de una extensión temporal expresada como un número decimal escalado por una unidad de tiempo."@es ;
     rdfs:domain time:Duration ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range xsd:decimal ;
     skos:definition "Value of a temporal extent expressed as a decimal number scaled by a temporal unit"@en,
         "Valor de una extensión temporal expresada como un número decimal escalado por una unidad de tiempo."@es .
@@ -2510,6 +2596,7 @@ time:numericPosition a owl:DatatypeProperty ;
     rdfs:comment "The (numeric) value indicating position within a temporal coordinate system "@en,
         "El valor (numérico) que indica posición temporal en un sistema de referencia ordinal."@es ;
     rdfs:domain time:TimePosition ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range xsd:decimal ;
     skos:definition "The (numeric) value indicating position within a temporal coordinate system "@en,
         "El valor (numérico) que indica posición temporal en un sistema de referencia ordinal."@es .
@@ -2519,6 +2606,7 @@ time:timeZone a owl:ObjectProperty ;
         "en huso horario"@es ;
     rdfs:comment "The time zone for clock elements in the temporal position"@en ;
     rdfs:domain time:GeneralDateTimeDescription ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:TimeZone ;
     skos:historyNote """In the original 2006 version of OWL-Time, the range of time:timeZone was a TimeZone class in a separate namespace "http://www.w3.org/2006/timezone#". 
 An alignment axiom 
@@ -2557,6 +2645,12 @@ cro:hasClaimEvent a rdf:Property,
     rdfs:comment "Links the claim to the related event." ;
     rdfs:domain cro:EventClaim ;
     rdfs:range cro:Event .
+
+cro:memberOf a rdf:Property ;
+    rdfs:label "Member Of" ;
+    rdfs:comment "Relates a feature to the feature collection of which it is a member." ;
+    rdfs:domain geo:Feature ;
+    rdfs:range geo:FeatureCollection .
 
 geo:ehEquals a rdf:Property,
         owl:ObjectProperty ;
@@ -2706,6 +2800,7 @@ time:DateTimeDescription a owl:Class ;
         "descripción de fecha-tiempo"@es ;
     rdfs:comment "Description of date and time structured with separate values for the various elements of a calendar-clock system. The temporal reference system is fixed to Gregorian Calendar, and the range of year, month, day properties restricted to corresponding XML Schema types xsd:gYear, xsd:gMonth and xsd:gDay, respectively."@en,
         "Descripción de fecha y tiempo estructurada con valores separados para los diferentes elementos de un sistema calendario-reloj. El sistema de referencia temporal está fijado al calendario gregoriano, y el rango de las propiedades año, mes, día restringidas a los correspondientes tipos del XML Schema xsd:gYear, xsd:gMonth y xsd:gDay respectivamente."@es ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:allValuesFrom xsd:gDay ;
             owl:onProperty time:day ],
@@ -2727,6 +2822,7 @@ time:DateTimeInterval a owl:Class ;
         "intervalo de fecha-hora"@es ;
     rdfs:comment "DateTimeInterval is a subclass of ProperInterval, defined using the multi-element DateTimeDescription."@en,
         "'intervalo de fecha-hora' es una subclase de 'intervalo propio', definida utilizando el multi-elemento 'descripción de fecha-hora'."@es ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:subClassOf time:ProperInterval ;
     skos:definition "DateTimeInterval is a subclass of ProperInterval, defined using the multi-element DateTimeDescription."@en,
         "'intervalo de fecha-hora' es una subclase de 'intervalo propio', definida utilizando el multi-elemento 'descripción de fecha-hora'."@es ;
@@ -2739,6 +2835,7 @@ time:after a owl:ObjectProperty ;
     rdfs:comment "The subject is a temporal entity that occurs after the object. If a temporal entity T1 is after another temporal entity T2, then the beginning of T1 is after the end of T2."@en,
         "Asume una dirección en el tiempo. Si una entidad temporal T1 está después de otra entidad temporal T2, entonces el principio de T1 está después del final de T2."@es ;
     rdfs:domain time:TemporalEntity ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:TemporalEntity ;
     owl:inverseOf time:before ;
     skos:definition "Gives directionality to time. If a temporal entity T1 is after another temporal entity T2, then the beginning of T1 is after the end of T2."@en,
@@ -2751,6 +2848,7 @@ time:before a owl:ObjectProperty,
     rdfs:comment "The subject is a temporal entity that occurs before the object. If a temporal entity T1 is before another temporal entity T2, then the end of T1 is before the beginning of T2. Thus, \"before\" can be considered to be basic to instants and derived for intervals."@en,
         "Asume una dirección en el tiempo. Si una entidad temporal T1 está antes que otra entidad temporal T2, entonces el final de T1 está antes que el principio de T2. Así, \"antes\" se puede considerar básica para instantes y derivada para intervalos."@es ;
     rdfs:domain time:TemporalEntity ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:TemporalEntity ;
     owl:inverseOf time:after ;
     skos:definition "Gives directionality to time. If a temporal entity T1 is before another temporal entity T2, then the end of T1 is before the beginning of T2. Thus, \"before\" can be considered to be basic to instants and derived for intervals."@en,
@@ -2762,6 +2860,7 @@ time:hasTemporalDuration a owl:ObjectProperty ;
     rdfs:comment "Duration of a temporal entity."@en,
         "Duración de una entidad temporal."@es ;
     rdfs:domain time:TemporalEntity ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:TemporalDuration ;
     skos:definition "Duration of a temporal entity."@en,
         "Duración de una entidad temporal."@es .
@@ -2771,6 +2870,7 @@ time:hasTime a owl:ObjectProperty ;
         "tiene tiempo"@es ;
     rdfs:comment "Supports the association of a temporal entity (instant or interval) to any thing"@en,
         "Proporciona soporte a la asociación de una entidad temporal (instante o intervalo) a cualquier cosa."@es ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:TemporalEntity ;
     skos:definition "Supports the association of a temporal entity (instant or interval) to any thing"@en,
         "Proporciona soporte a la asociación de una entidad temporal (instante o intervalo) a cualquier cosa."@es ;
@@ -2783,6 +2883,7 @@ time:hour a owl:DatatypeProperty ;
     rdfs:comment "Hour position in a calendar-clock system."@en,
         "Posición de hora en un sistema calendario-reloj."@es ;
     rdfs:domain time:GeneralDateTimeDescription ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range xsd:nonNegativeInteger ;
     skos:definition "Hour position in a calendar-clock system."@en,
         "Posición de hora en un sistema calendario-reloj."@es .
@@ -2793,6 +2894,7 @@ time:inTemporalPosition a owl:ObjectProperty ;
     rdfs:comment "Position of a time instant"@en,
         "Posición de un instante de tiempo."@es ;
     rdfs:domain time:Instant ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:TemporalPosition ;
     skos:definition "Position of a time instant"@en,
         "Posición de un instante de tiempo."@es .
@@ -2803,6 +2905,7 @@ time:intervalDisjoint a owl:ObjectProperty ;
     rdfs:comment "If a proper interval T1 is intervalDisjoint another proper interval T2, then the beginning of T1 is after the end of T2, or the end of T1 is before the beginning of T2, i.e. the intervals do not overlap in any way, but their ordering relationship is not known."@en,
         "Si un intervalo propio T1 es disjunto con otro intervalo propio T2, entonces el principio de T1 está después del final de T2, o el final de T1 está antes que el principio de T2, es decir, los intervalos no se solapan de ninguna forma, aunque su relación de orden no se conozca."@es ;
     rdfs:domain time:ProperInterval ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:ProperInterval ;
     skos:definition "If a proper interval T1 is intervalDisjoint another proper interval T2, then the beginning of T1 is after the end of T2, or the end of T1 is before the beginning of T2, i.e. the intervals do not overlap in any way, but their ordering relationship is not known."@en,
         "Si un intervalo propio T1 es disjunto con otro intervalo propio T2, entonces el principio de T1 está después del final de T2, o el final de T1 está antes que el principio de T2, es decir, los intervalos no se solapan de ninguna forma, aunque su relación de orden no se conozca."@es ;
@@ -2815,6 +2918,7 @@ time:minute a owl:DatatypeProperty ;
     rdfs:comment "Minute position in a calendar-clock system."@en,
         "Posición de minuto en un sistema calendario-reloj."@es ;
     rdfs:domain time:GeneralDateTimeDescription ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range xsd:nonNegativeInteger ;
     skos:definition "Minute position in a calendar-clock system."@en,
         "Posición de minuto en un sistema calendario-reloj."@es .
@@ -2825,10 +2929,12 @@ time:second a owl:DatatypeProperty ;
     rdfs:comment "Second position in a calendar-clock system."@en,
         "Posición de segundo en un sistema calendario-reloj."@es ;
     rdfs:domain time:GeneralDateTimeDescription ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range xsd:decimal .
 
 time:unitMonth a time:TemporalUnit ;
     rdfs:label "Month (unit of temporal duration)"@en ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     skos:prefLabel "شهر واحد"@ar,
         "Monat"@de,
         "month"@en,
@@ -2855,13 +2961,22 @@ time:week a owl:DatatypeProperty ;
     rdfs:comment "Week number within the year."@en,
         "Número de semana en el año."@es ;
     rdfs:domain time:GeneralDateTimeDescription ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range xsd:nonNegativeInteger ;
     skos:note "Weeks are numbered differently depending on the calendar in use and the local language or cultural conventions (locale). ISO-8601 specifies that the first week of the year includes at least four days, and that Monday is the first day of the week. In that system, week 1 is the week that contains the first Thursday in the year."@en ;
     skos:scopeNote "Las semanas están numeradas de forma diferente dependiendo del calendario en uso y de las convenciones lingüísticas y culturales locales (locale en inglés). El ISO-8601 especifica que la primera semana del año incluye al menos cuatro días, y que el lunes es el primer día de la semana. En ese sistema, la semana 1 es la semana que contiene el primer jueves del año."@es .
 
+cro:County rdfs:label "County" ;
+    rdfs:comment "County" ;
+    rdfs:subClassOf cro:AdminBoundary .
+
 cro:PerilRegion rdfs:label "Peril-Region" ;
     rdfs:comment "A composite key representing a Peril Region combination" ;
     rdfs:subClassOf cro:AggregationVector .
+
+cro:ZipCode rdfs:label "Postal Code" ;
+    rdfs:comment "Postal Code" ;
+    rdfs:subClassOf cro:AdminBoundary .
 
 geo:ehDisjoint a rdf:Property,
         owl:ObjectProperty ;
@@ -2896,6 +3011,7 @@ time:Duration a owl:Class ;
         "Time duration"@en ;
     rdfs:comment "Duration of a temporal extent expressed as a number scaled by a temporal unit"@en,
         "Duración de una extensión temporal expresada como un número escalado por una unidad temporal."@es ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:cardinality "1"^^xsd:nonNegativeInteger ;
             owl:onProperty time:numericDuration ],
@@ -2913,6 +3029,7 @@ time:TimePosition a owl:Class ;
         "posición de tiempo"@es ;
     rdfs:comment "A temporal position described using either a (nominal) value from an ordinal reference system, or a (numeric) value in a temporal coordinate system. "@en,
         "Una posición temporal descrita utilizando bien un valor (nominal) de un sistema de referencia ordinal, o un valor (numérico) en un sistema de coordenadas temporales."@es ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:subClassOf [ a owl:Class ;
             owl:unionOf ( [ a owl:Restriction ;
                         owl:cardinality "1"^^xsd:nonNegativeInteger ;
@@ -2931,6 +3048,7 @@ time:day a owl:DatatypeProperty ;
 The range of this property is not specified, so can be replaced by any specific representation of a calendar day from any calendar. """@en,
         "Posición de día en un sistema calendario-reloj."@es ;
     rdfs:domain time:GeneralDateTimeDescription ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     skos:definition """Day position in a calendar-clock system.
 
 The range of this property is not specified, so can be replaced by any specific representation of a calendar day from any calendar. """@en,
@@ -2944,6 +3062,7 @@ time:days a owl:DatatypeProperty ;
     rdfs:comment "length of, or element of the length of, a temporal extent expressed in days"@en,
         "Longitud de, o elemento de la longitud de, una extensión temporal expresada en días."@es ;
     rdfs:domain time:GeneralDurationDescription ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range xsd:decimal ;
     skos:definition "length of, or element of the length of, a temporal extent expressed in days"@en,
         "Longitud de, o elemento de la longitud de, una extensión temporal expresada en días."@es .
@@ -2954,6 +3073,7 @@ time:hours a owl:DatatypeProperty ;
     rdfs:comment "length of, or element of the length of, a temporal extent expressed in hours"@en,
         "Longitud de, o elemento de la longitud de, una extensión temporal expresada en horas."@es ;
     rdfs:domain time:GeneralDurationDescription ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range xsd:decimal ;
     skos:definition "length of, or element of the length of, a temporal extent expressed in hours"@en,
         "Longitud de, o elemento de la longitud de, una extensión temporal expresada en horas."@es .
@@ -2964,6 +3084,7 @@ time:minutes a owl:DatatypeProperty ;
     rdfs:comment "length, or element of, a temporal extent expressed in minutes"@en,
         "Longitud de, o elemento de la longitud de, una extensión temporal expresada en minutos."@es ;
     rdfs:domain time:GeneralDurationDescription ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range xsd:decimal ;
     skos:definition "length, or element of, a temporal extent expressed in minutes"@en,
         "Longitud de, o elemento de la longitud de, una extensión temporal expresada en minutos."@es .
@@ -2974,6 +3095,7 @@ time:months a owl:DatatypeProperty ;
     rdfs:comment "length of, or element of the length of, a temporal extent expressed in months"@en,
         "Longitud de, o elemento de la longitud de, una extensión temporal expresada en meses."@es ;
     rdfs:domain time:GeneralDurationDescription ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range xsd:decimal ;
     skos:definition "length of, or element of the length of, a temporal extent expressed in months"@en,
         "Longitud de, o elemento de la longitud de, una extensión temporal expresada en meses."@es .
@@ -2984,6 +3106,7 @@ time:seconds a owl:DatatypeProperty ;
     rdfs:comment "length of, or element of the length of, a temporal extent expressed in seconds"@en,
         "Longitud de, o elemento de la longitud de, una extensión temporal expresada en segundos."@es ;
     rdfs:domain time:GeneralDurationDescription ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range xsd:decimal ;
     rdfs:seeAlso <http://www.bipm.org/en/publications/si-brochure/second.html> .
 
@@ -2993,6 +3116,7 @@ time:weeks a owl:DatatypeProperty ;
     rdfs:comment "length of, or element of the length of, a temporal extent expressed in weeks"@en,
         "Longitud de, o elemento de la longitud de, una extensión temporal expresada en semanas."@es ;
     rdfs:domain time:GeneralDurationDescription ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range xsd:decimal .
 
 time:year a owl:DatatypeProperty ;
@@ -3003,7 +3127,8 @@ The range of this property is not specified, so can be replaced by any specific 
         """Posición de año en un sistema calendario-reloj.
 
 l rango de esta propiedad no está especificado, por tanto, se puede reemplazar por cualquier representación específica de un año de calendario de un calendario cualquiera."""@es ;
-    rdfs:domain time:GeneralDateTimeDescription .
+    rdfs:domain time:GeneralDateTimeDescription ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> .
 
 time:years a owl:DatatypeProperty ;
     rdfs:label "years duration"@en,
@@ -3011,7 +3136,21 @@ time:years a owl:DatatypeProperty ;
     rdfs:comment "length of, or element of the length of, a temporal extent expressed in years"@en,
         "Longitud de, o elemento de la longitud de, una extensión temporal expresada en años."@es ;
     rdfs:domain time:GeneralDurationDescription ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range xsd:decimal .
+
+cro:containsFeature a rdf:Property ;
+    rdfs:label "Contains Feature" ;
+    rdfs:comment "Relates a feature collection to a feature it contains." ;
+    rdfs:domain geo:FeatureCollection ;
+    rdfs:range geo:Feature ;
+    owl:inverseOf cro:memberOf .
+
+cro:hasClaimLossFeature a rdf:Property ;
+    rdfs:label "Has Claim Loss Feature" ;
+    rdfs:comment "Administrative boundary (feature) where the event claim loss occurred." ;
+    rdfs:domain cro:EventClaim ;
+    rdfs:range cro:AdminBoundary .
 
 cro:hasExposure a rdf:Property,
         owl:FunctionalProperty ;
@@ -3090,6 +3229,7 @@ time:TemporalDuration a owl:Class ;
         "duración temporal"@es ;
     rdfs:comment "Time extent; duration of a time interval separate from its particular start position"@en,
         "Extensión de tiempo; duración de un intervalo de tiempo independiente de su posición de inicio particular."@es ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     skos:definition "Time extent; duration of a time interval separate from its particular start position"@en,
         "Extensión de tiempo; duración de un intervalo de tiempo independiente de su posición de inicio particular."@es .
 
@@ -3098,6 +3238,7 @@ time:TemporalPosition a owl:Class ;
         "posición temporal"@es ;
     rdfs:comment "A position on a time-line"@en,
         "Una posición sobre una línea de tiempo."@es ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:cardinality "1"^^xsd:nonNegativeInteger ;
             owl:onProperty time:hasTRS ] ;
@@ -3112,6 +3253,7 @@ time:hasTRS a owl:FunctionalProperty,
         "El sistema de referencia temporal utilizado por una posición temporal o descripción de extensión."@es ;
     rdfs:domain [ a owl:Class ;
             owl:unionOf ( time:TemporalPosition time:GeneralDurationDescription ) ] ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:TRS ;
     skos:definition "The temporal reference system used by a temporal position or extent description. "@en,
         "El sistema de referencia temporal utilizado por una posición temporal o descripción de extensión."@es .
@@ -3122,6 +3264,7 @@ time:intervalIn a owl:ObjectProperty ;
     rdfs:comment "If a proper interval T1 is intervalIn another proper interval T2, then the beginning of T1 is after the beginning of T2 or is coincident with the beginning of T2, and the end of T1 is before the end of T2, or is coincident with the end of T2, except that end of T1 may not be coincident with the end of T2 if the beginning of T1 is coincident with the beginning of T2."@en,
         "Si un intervalo propio T1 es un intervalo interior a otro intervalo propio T2, entonces el principio de T1 está después del principio de T2 o coincide con el principio de T2, y el final de T1 está antes que el final de T2, o coincide con el final de T2, excepto que el final de T1 puede no coincidir con el final de T2 si el principio de T1 coincide con el principio de T2."@es ;
     rdfs:domain time:ProperInterval ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:ProperInterval ;
     owl:propertyDisjointWith time:intervalEquals ;
     skos:definition "If a proper interval T1 is intervalIn another proper interval T2, then the beginning of T1 is after the beginning of T2 or is coincident with the beginning of T2, and the end of T1 is before the end of T2, or is coincident with the end of T2, except that end of T1 may not be coincident with the end of T2 if the beginning of T1 is coincident with the beginning of T2."@en,
@@ -3138,6 +3281,7 @@ The range of this property is not specified, so can be replaced by any specific 
         """Posición de mes en un sistema calendario-reloj.
     El rango de esta propiedad no está especificado, por tanto, se puede reemplazar por cualquier representación específica de un mes de calendario de un calendario cualquiera."""@es ;
     rdfs:domain time:GeneralDateTimeDescription ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     skos:definition """Month position in a calendar-clock system.
 
 The range of this property is not specified, so can be replaced by any specific representation of a calendar month from any calendar. """@en,
@@ -3151,6 +3295,7 @@ time:unitType a owl:ObjectProperty ;
         "La unidad de tiempo que proporciona la precisión de un valor fecha-hora o la escala de una extensión temporal."@es ;
     rdfs:domain [ a owl:Class ;
             owl:unionOf ( time:GeneralDateTimeDescription time:Duration ) ] ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:range time:TemporalUnit .
 
 cro:ExposureAccumulationRecord rdfs:label "Exposure Accumulation Result Record" ;
@@ -3173,6 +3318,7 @@ time:Interval a owl:Class ;
         "intervalo de tiempo"@es ;
     rdfs:comment "A temporal entity with an extent or duration"@en,
         "Una entidad temporal con una extensión o duración."@es ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:subClassOf time:TemporalEntity ;
     skos:definition "A temporal entity with an extent or duration"@en,
         "Una entidad temporal con una extensión o duración."@es .
@@ -3190,6 +3336,7 @@ time:DayOfWeek a owl:Class ;
         "día de la semana"@es ;
     rdfs:comment "The day of week"@en,
         "El día de la semana"@es ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:subClassOf owl:Thing ;
     skos:changeNote """Remove enumeration from definition, in order to allow other days to be used when required in other calendars. 
 NOTE: existing days are still present as members of the class, but the class membership is now open. 
@@ -3222,6 +3369,7 @@ time:GeneralDurationDescription a owl:Class ;
         "descripción de duración generalizada"@es ;
     rdfs:comment "Description of temporal extent structured with separate values for the various elements of a calendar-clock system."@en,
         "Descripción de extensión temporal estructurada con valores separados para los distintos elementos de un sistema de horario-calendario."@es ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:cardinality "1"^^xsd:nonNegativeInteger ;
             owl:onProperty time:hasTRS ],
@@ -3257,6 +3405,7 @@ time:TemporalEntity a owl:Class ;
         "entidad temporal"@es ;
     rdfs:comment "A temporal interval or instant."@en,
         "Un intervalo temporal o un instante."@es ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:subClassOf owl:Thing ;
     owl:unionOf ( time:Instant time:Interval ) ;
     skos:definition "A temporal interval or instant."@en,
@@ -3267,6 +3416,7 @@ time:TemporalUnit a owl:Class ;
         "unidad de tiempo"@es ;
     rdfs:comment "A standard duration, which provides a scale factor for a time extent, or the granularity or precision for a time position."@en,
         "Una duración estándar, que proporciona un factor de escala para una extensión de tiempo, o la granularidad o precisión para una posición de tiempo."@es ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:subClassOf time:TemporalDuration ;
     skos:changeNote """Remove enumeration from definition, in order to allow other units to be used when required in other coordinate systems. 
 NOTE: existing units are still present as members of the class, but the class membership is now open. 
@@ -3295,6 +3445,7 @@ time:GeneralDateTimeDescription a owl:Class ;
         "descripción de fecha-hora generalizada"@es ;
     rdfs:comment "Description of date and time structured with separate values for the various elements of a calendar-clock system"@en,
         "Descripción de fecha y hora estructurada con valores separados para los distintos elementos de un sistema calendario-reloj."@es ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:cardinality "1"^^xsd:nonNegativeInteger ;
             owl:onProperty time:unitType ],
@@ -3342,6 +3493,7 @@ time:Instant a owl:Class ;
         "instante de tiempo."@es ;
     rdfs:comment "A temporal entity with zero extent or duration"@en,
         "Una entidad temporal con una extensión o duración cero."@es ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:subClassOf time:TemporalEntity ;
     skos:definition "A temporal entity with zero extent or duration"@en,
         "Una entidad temporal con una extensión o duración cero."@es .
@@ -3351,6 +3503,7 @@ time:ProperInterval a owl:Class ;
         "intervalo propio"@es ;
     rdfs:comment "A temporal entity with non-zero extent or duration, i.e. for which the value of the beginning and end are different"@en,
         "Una entidad temporal con extensión o duración distinta de cero, es decir, para la cual los valores de principio y fin del intervalo son diferentes."@es ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     rdfs:subClassOf time:Interval ;
     owl:disjointWith time:Instant ;
     skos:definition "A temporal entity with non-zero extent or duration, i.e. for which the value of the beginning and end are different"@en,

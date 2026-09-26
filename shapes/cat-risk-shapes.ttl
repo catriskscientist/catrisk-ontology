@@ -1,0 +1,355 @@
+@prefix cro: <https://w3id.org/catrisk/ontology#> .
+@prefix crosh: <https://w3id.org/catrisk/shapes#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sdo: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/catrisk/shapes> a owl:Ontology ;
+    rdfs:label "Catastrophe Risk Ontology - SHACL Shapes" ;
+    dcterms:created "2026-09-26"^^xsd:date ;
+    dcterms:creator crosh:author ;
+    dcterms:source <https://w3id.org/catrisk/ontology> ;
+    rdfs:comment "Validation shapes for the Catastrophe Risk Ontology (CRO), derived from the ontology's competency questions. Maintained on a lifecycle separate from the ontology." ;
+    owl:versionIRI <https://w3id.org/catrisk/shapes/1.0.0> .
+
+crosh:AALShape a sh:NodeShape ;
+    rdfs:comment "An AAL record must carry a mean value to be comparable against observed losses." ;
+    skos:note "Serves competency question(s): CQ1." ;
+    sh:property crosh:AAL_meanvalue,
+        crosh:AAL_sdvalue ;
+    sh:targetClass cro:AAL,
+        cro:AccountAAL,
+        cro:LocationAAL,
+        cro:PortfolioAAL .
+
+crosh:EPCurveShape a sh:NodeShape ;
+    rdfs:comment "Each EP-curve point must be usable for return-period interpolation." ;
+    skos:note "Serves competency question(s): CQ2, CQ3." ;
+    sh:property crosh:EPCurve_ep_loss,
+        crosh:EPCurve_returnperiod ;
+    sh:targetClass cro:AEP,
+        cro:EPCURVE,
+        cro:OEP .
+
+crosh:EventClaimShape a sh:NodeShape ;
+    rdfs:comment "EventClaim is the as-reported record; a claim is described by Event, LOB, a loss location, and reported financials (paper, section 3.2.2)." ;
+    skos:note "Serves competency question(s): CQ1, CQ4, CQ5." ;
+    sh:message "EventClaim must have at least one loss location (hasClaimLossCountry or hasClaimLossFeature)." ;
+    sh:or crosh:EventClaim_lossLocationList ;
+    sh:property crosh:EventClaim_IBNR,
+        crosh:EventClaim_completenessRatio,
+        crosh:EventClaim_grossIncurred,
+        crosh:EventClaim_hasClaimEvent,
+        crosh:EventClaim_hasClaimLOB,
+        crosh:EventClaim_lastUpdated ;
+    sh:targetClass cro:EventClaim .
+
+crosh:EventLossShape a sh:NodeShape ;
+    rdfs:comment "EventLoss is the peril-attributed, aggregation-ready loss consumed by AAL comparison and non-modeled-loss summaries." ;
+    skos:note "Serves competency question(s): CQ1, CQ4." ;
+    sh:property crosh:EventLoss_eventLossOf,
+        crosh:EventLoss_hasGrossIncurredLoss,
+        crosh:EventLoss_hasLOB,
+        crosh:EventLoss_hasLossCountry,
+        crosh:EventLoss_hasPeril,
+        crosh:EventLoss_isModeledLoss,
+        crosh:EventLoss_perilContributionFactor ;
+    sh:targetClass cro:EventLoss .
+
+crosh:EventPerilFactorSumShape a sh:NodeShape ;
+    rdfs:comment "The peril-contribution factors of an event's EventPerilMap records must sum to 1.0 (paper, section 3.2.2)." ;
+    skos:note "Serves competency question(s): CQ1, CQ4." ;
+    sh:sparql crosh:EventPerilFactorSum_Constraint ;
+    sh:targetClass cro:Event .
+
+crosh:EventPerilMapShape a sh:NodeShape ;
+    rdfs:comment "An EventPerilMap decomposes one event's loss into a single peril contribution." ;
+    skos:note "Serves competency question(s): CQ1, CQ4." ;
+    sh:property crosh:EventPerilMap_hasEvent,
+        crosh:EventPerilMap_hasFactorValue,
+        crosh:EventPerilMap_hasPeril ;
+    sh:targetClass cro:EventPerilMap .
+
+crosh:YlprKeyShape a sh:NodeShape ;
+    rdfs:comment "ylpr is the composite key {Year, LOB, Peril, Region}; all four attributes must be present (paper, section 3.2.5)." ;
+    skos:note "Serves competency question(s): CQ1, CQ3." ;
+    sh:property crosh:Ylpr_hasLOBAttribute,
+        crosh:Ylpr_hasPerilAttribute,
+        crosh:Ylpr_hasRegionAttribute,
+        crosh:Ylpr_hasYearAttribute ;
+    sh:targetClass cro:ylpr .
+
+crosh:YlprUniqueShape a sh:NodeShape ;
+    rdfs:comment "The {Year, LOB, Peril, Region} 4-tuple should be unique across ylpr instances." ;
+    skos:note "Serves competency question(s): CQ1, CQ3." ;
+    sh:sparql crosh:YlprUnique_Constraint ;
+    sh:targetClass cro:ylpr .
+
+crosh:AAL_meanvalue a sh:PropertyShape ;
+    skos:note "Serves competency question(s): CQ1." ;
+    sh:datatype xsd:float ;
+    sh:maxCount 1 ;
+    sh:message "AAL must have a non-negative meanvalue." ;
+    sh:minCount 1 ;
+    sh:minInclusive 0e+00 ;
+    sh:path cro:meanvalue ;
+    sh:severity sh:Violation .
+
+crosh:AAL_sdvalue a sh:PropertyShape ;
+    skos:note "Serves competency question(s): CQ1." ;
+    sh:datatype xsd:float ;
+    sh:maxCount 1 ;
+    sh:message "sdvalue, if present, must be non-negative." ;
+    sh:minInclusive 0e+00 ;
+    sh:path cro:sdvalue ;
+    sh:severity sh:Warning .
+
+crosh:EPCurve_ep_loss a sh:PropertyShape ;
+    skos:note "Serves competency question(s): CQ2, CQ3." ;
+    sh:datatype xsd:float ;
+    sh:maxCount 1 ;
+    sh:message "EP-curve point must have a non-negative ep_loss." ;
+    sh:minCount 1 ;
+    sh:minInclusive 0e+00 ;
+    sh:path cro:ep_loss ;
+    sh:severity sh:Violation .
+
+crosh:EPCurve_returnperiod a sh:PropertyShape ;
+    skos:note "Serves competency question(s): CQ2, CQ3." ;
+    sh:datatype xsd:float ;
+    sh:maxCount 1 ;
+    sh:message "EP-curve point must have a positive returnperiod." ;
+    sh:minCount 1 ;
+    sh:minExclusive 0e+00 ;
+    sh:path cro:returnperiod ;
+    sh:severity sh:Violation .
+
+crosh:EventClaim_IBNR a sh:PropertyShape ;
+    skos:note "Serves competency question(s): CQ1." ;
+    sh:datatype xsd:float ;
+    sh:maxCount 1 ;
+    sh:message "IBNR, if present, must be non-negative." ;
+    sh:minInclusive 0e+00 ;
+    sh:path cro:IBNR ;
+    sh:severity sh:Warning .
+
+crosh:EventClaim_completenessRatio a sh:PropertyShape ;
+    skos:note "Serves competency question(s): CQ5." ;
+    sh:datatype xsd:float ;
+    sh:maxCount 1 ;
+    sh:message "completenessRatio must be >= 1.0 (a loss-development factor: projected loss = incurred loss x completenessRatio)." ;
+    sh:minInclusive 1e+00 ;
+    sh:path cro:completenessRatio ;
+    sh:severity sh:Warning .
+
+crosh:EventClaim_grossIncurred a sh:PropertyShape ;
+    skos:note "Serves competency question(s): CQ1, CQ4." ;
+    sh:datatype xsd:float ;
+    sh:maxCount 1 ;
+    sh:message "EventClaim must have a non-negative grossIncurred." ;
+    sh:minCount 1 ;
+    sh:minInclusive 0e+00 ;
+    sh:path cro:grossIncurred ;
+    sh:severity sh:Violation .
+
+crosh:EventClaim_hasClaimEvent a sh:PropertyShape ;
+    skos:note "Serves competency question(s): CQ1, CQ4, CQ5." ;
+    sh:class cro:Event ;
+    sh:maxCount 1 ;
+    sh:message "EventClaim must link to exactly one Event via hasClaimEvent." ;
+    sh:minCount 1 ;
+    sh:path cro:hasClaimEvent ;
+    sh:severity sh:Violation .
+
+crosh:EventClaim_hasClaimLOB a sh:PropertyShape ;
+    skos:note "Serves competency question(s): CQ1, CQ4." ;
+    sh:class cro:LOB ;
+    sh:maxCount 1 ;
+    sh:message "EventClaim must have exactly one hasClaimLOB." ;
+    sh:minCount 1 ;
+    sh:path cro:hasClaimLOB ;
+    sh:severity sh:Violation .
+
+crosh:EventClaim_lastUpdated a sh:PropertyShape ;
+    skos:note "Serves competency question(s): CQ5." ;
+    sh:datatype xsd:date ;
+    sh:maxCount 1 ;
+    sh:message "lastUpdated, if present, must be an xsd:date." ;
+    sh:path cro:lastUpdated ;
+    sh:severity sh:Warning .
+
+crosh:EventClaim_lossLocationCountry a sh:PropertyShape ;
+    sh:minCount 1 ;
+    sh:path cro:hasClaimLossCountry .
+
+crosh:EventClaim_lossLocationFeature a sh:PropertyShape ;
+    sh:minCount 1 ;
+    sh:path cro:hasClaimLossFeature .
+
+crosh:EventClaim_lossLocationList rdf:first crosh:EventClaim_lossLocationCountry ;
+    rdf:rest ( crosh:EventClaim_lossLocationFeature ) .
+
+crosh:EventLoss_eventLossOf a sh:PropertyShape ;
+    skos:note "Serves competency question(s): CQ1, CQ4." ;
+    sh:class cro:Event ;
+    sh:maxCount 1 ;
+    sh:message "EventLoss must link to exactly one Event via eventLossOf." ;
+    sh:minCount 1 ;
+    sh:path cro:eventLossOf ;
+    sh:severity sh:Violation .
+
+crosh:EventLoss_hasGrossIncurredLoss a sh:PropertyShape ;
+    skos:note "Serves competency question(s): CQ1, CQ4." ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+    sh:message "EventLoss must have a non-negative hasGrossIncurredLoss." ;
+    sh:minCount 1 ;
+    sh:minInclusive 0e+00 ;
+    sh:path cro:hasGrossIncurredLoss ;
+    sh:severity sh:Violation .
+
+crosh:EventLoss_hasLOB a sh:PropertyShape ;
+    skos:note "Serves competency question(s): CQ1, CQ4." ;
+    sh:class cro:LOB ;
+    sh:maxCount 1 ;
+    sh:message "EventLoss must have exactly one hasLOB." ;
+    sh:minCount 1 ;
+    sh:path cro:hasLOB ;
+    sh:severity sh:Violation .
+
+crosh:EventLoss_hasLossCountry a sh:PropertyShape ;
+    skos:note "Serves competency question(s): CQ1, CQ4." ;
+    sh:class cro:Country ;
+    sh:maxCount 1 ;
+    sh:message "EventLoss must have exactly one hasLossCountry." ;
+    sh:minCount 1 ;
+    sh:path cro:hasLossCountry ;
+    sh:severity sh:Violation .
+
+crosh:EventLoss_hasPeril a sh:PropertyShape ;
+    skos:note "Serves competency question(s): CQ1, CQ4." ;
+    sh:maxCount 1 ;
+    sh:message "EventLoss must have exactly one hasPeril." ;
+    sh:minCount 1 ;
+    sh:path cro:hasPeril ;
+    sh:severity sh:Violation .
+
+crosh:EventLoss_isModeledLoss a sh:PropertyShape ;
+    skos:note "Serves competency question(s): CQ4." ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+    sh:message "EventLoss must state isModeledLoss (true/false)." ;
+    sh:minCount 1 ;
+    sh:path cro:isModeledLoss ;
+    sh:severity sh:Violation .
+
+crosh:EventLoss_perilContributionFactor a sh:PropertyShape ;
+    skos:note "Serves competency question(s): CQ1, CQ4." ;
+    sh:datatype xsd:float ;
+    sh:maxCount 1 ;
+    sh:maxInclusive 1e+00 ;
+    sh:message "perilContributionFactor must be present and within [0,1]." ;
+    sh:minCount 1 ;
+    sh:minInclusive 0e+00 ;
+    sh:path cro:perilContributionFactor ;
+    sh:severity sh:Violation .
+
+crosh:EventPerilFactorSum_Constraint a sh:SPARQLConstraint ;
+    sh:message "The EventPerilMap factors for this Event do not sum to 1.0 (tolerance 0.01)." ;
+    sh:select """SELECT $this (SUM(?f) AS ?total)
+WHERE {
+  $this <https://w3id.org/catrisk/ontology#hasEventPerilMap> ?m .
+  ?m <https://w3id.org/catrisk/ontology#hasFactorValue> ?f .
+}
+GROUP BY $this
+HAVING (ABS(SUM(?f) - 1.0) > 0.01)""" ;
+    sh:severity sh:Warning .
+
+crosh:EventPerilMap_hasEvent a sh:PropertyShape ;
+    skos:note "Serves competency question(s): CQ1, CQ4." ;
+    sh:class cro:Event ;
+    sh:maxCount 1 ;
+    sh:message "EventPerilMap must link to exactly one Event via hasEvent." ;
+    sh:minCount 1 ;
+    sh:path cro:hasEvent ;
+    sh:severity sh:Violation .
+
+crosh:EventPerilMap_hasFactorValue a sh:PropertyShape ;
+    skos:note "Serves competency question(s): CQ1, CQ4." ;
+    sh:datatype xsd:float ;
+    sh:maxCount 1 ;
+    sh:maxInclusive 1e+00 ;
+    sh:message "hasFactorValue must be present and within [0,1]." ;
+    sh:minCount 1 ;
+    sh:minInclusive 0e+00 ;
+    sh:path cro:hasFactorValue ;
+    sh:severity sh:Violation .
+
+crosh:EventPerilMap_hasPeril a sh:PropertyShape ;
+    skos:note "Serves competency question(s): CQ1, CQ4." ;
+    sh:maxCount 1 ;
+    sh:message "EventPerilMap must link to exactly one Peril via hasPeril." ;
+    sh:minCount 1 ;
+    sh:path cro:hasPeril ;
+    sh:severity sh:Violation .
+
+crosh:YlprUnique_Constraint a sh:SPARQLConstraint ;
+    sh:message "Another ylpr shares this {Year, LOB, Peril, Region} composite key." ;
+    sh:select """SELECT $this ?other
+WHERE {
+  $this <https://w3id.org/catrisk/ontology#hasYearAttribute> ?y ;
+        <https://w3id.org/catrisk/ontology#hasLOBAttribute> ?l ;
+        <https://w3id.org/catrisk/ontology#hasPerilAttribute> ?p ;
+        <https://w3id.org/catrisk/ontology#hasRegionAttribute> ?r .
+  ?other a <https://w3id.org/catrisk/ontology#ylpr> ;
+        <https://w3id.org/catrisk/ontology#hasYearAttribute> ?y ;
+        <https://w3id.org/catrisk/ontology#hasLOBAttribute> ?l ;
+        <https://w3id.org/catrisk/ontology#hasPerilAttribute> ?p ;
+        <https://w3id.org/catrisk/ontology#hasRegionAttribute> ?r .
+  FILTER (?other != $this)
+}""" ;
+    sh:severity sh:Warning .
+
+crosh:Ylpr_hasLOBAttribute a sh:PropertyShape ;
+    skos:note "Serves competency question(s): CQ1, CQ3." ;
+    sh:class cro:LOB ;
+    sh:maxCount 1 ;
+    sh:message "ylpr must have exactly one hasLOBAttribute." ;
+    sh:minCount 1 ;
+    sh:path cro:hasLOBAttribute ;
+    sh:severity sh:Violation .
+
+crosh:Ylpr_hasPerilAttribute a sh:PropertyShape ;
+    skos:note "Serves competency question(s): CQ1, CQ3." ;
+    sh:maxCount 1 ;
+    sh:message "ylpr must have exactly one hasPerilAttribute." ;
+    sh:minCount 1 ;
+    sh:path cro:hasPerilAttribute ;
+    sh:severity sh:Violation .
+
+crosh:Ylpr_hasRegionAttribute a sh:PropertyShape ;
+    skos:note "Serves competency question(s): CQ1, CQ3." ;
+    sh:maxCount 1 ;
+    sh:message "ylpr must have exactly one hasRegionAttribute." ;
+    sh:minCount 1 ;
+    sh:path cro:hasRegionAttribute ;
+    sh:severity sh:Violation .
+
+crosh:Ylpr_hasYearAttribute a sh:PropertyShape ;
+    skos:note "Serves competency question(s): CQ1, CQ3." ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+    sh:message "ylpr must have exactly one hasYearAttribute." ;
+    sh:minCount 1 ;
+    sh:path cro:hasYearAttribute ;
+    sh:severity sh:Violation .
+
+crosh:author a sdo:Person ;
+    sdo:affiliation "NFP, Inc." ;
+    sdo:name "Sashi Kanth Tadinada, PhD" .
+

@@ -131,6 +131,9 @@ The `ontology.ttl` file in this repository is the version accompanying the paper
 |------|------|-------------|
 | `ontology.ttl` | `./ontology.ttl` | The **Catastrophe Risk Ontology (CRO)** in Turtle/RDF — the full class hierarchy, object and data properties, and axioms (namespace `cro:`). Authoritative machine-readable schema. Imports GeoSPARQL, OWL-Time, SKOS, and Dublin Core vocabularies. |
 | `Catastrophe Risk Ontology - Classes, Properties.xlsx` | `./Catastrophe Risk Ontology - Classes, Properties.xlsx` | Human-readable companion to `ontology.ttl`. **`class`** sheet: 52 classes with labels and descriptions. **`property`** sheet: 125 object/data properties as *source → property → target*, with labels, descriptions, and OWL characteristics (functional, inverse-functional, symmetric, transitive, reflexive, cardinality bounds). |
+| `cat-risk-shapes.ttl` | `./shapes/cat-risk-shapes.ttl` | **SHACL shapes** validating instance data against the ontology's competency questions — eight named node shapes (no blank-node shapes) with severities and per-shape competency-question annotations. |
+| `cro_shapes.py` | `./shapes/cro_shapes.py` | Builder that regenerates `cat-risk-shapes.ttl`, maintained on a lifecycle separate from the ontology. |
+| `cro_shapes.md` | `./shapes/cro_shapes.md` | Design document for the shapes: competency questions, the shape catalogue with rationale, illustrative controlled vocabularies, and validation results. |
 | `Sample SPARQL Queries.txt` | `./Sample SPARQL Queries.txt` | Six worked SPARQL queries (`q0`–`q5`) against the example graph: cat-model/peril inventory, events and peril factors, event losses by peril/region/country, portfolio AAL rollups, incurred-vs-modeled AAL comparison, and event-specific loss lookup. |
 | `cat-ontology example knowledge graph.ttl` | `./LLM integration (chat with data)/cat-ontology example knowledge graph.ttl` | A populated **example knowledge graph** (instance data) conforming to the ontology — synthetic events, losses, portfolios, cat-model results, and reference dimensions (peril, region, LOB, year). Query target for the SPARQL examples and the LLM chat pipeline. No proprietary data. |
 | `Ontology aware prompting for SPARQL query generation.txt` | `./LLM integration (chat with data)/Ontology aware prompting for SPARQL query generation.txt` | The **ontology-aware prompt template** that turns a natural-language question into a SPARQL query. Embeds the class/property schema, the `cro:` namespace, controlled peril/region/LOB codes, and query-construction guidance; `{question}` is substituted at run time. |
@@ -223,6 +226,31 @@ foundation for the normalization method in the paper.
   needed. Run from inside the `Hurricane Loss Normalization with MCMC/` directory so
   `ylt.csv` is found by relative path.
 
+### 6. SHACL validation shapes
+
+The `shapes/` folder adds a **SHACL** constraint layer that checks whether instance data
+carries what the ontology's competency questions require. The shapes are derived from the
+competency questions rather than the class list: for example, every `EventLoss` must carry
+the peril, line of business, loss country, loss amount, and `isModeledLoss` flag needed for
+the AAL comparison and the non-modeled-loss summary; every `ylpr` record must be complete on
+the `{Year, LOB, Peril, Region}` composite key; and each event's `EventPerilMap` factors
+must sum to unity. Constraints are **named** (no blank-node shapes), graded by `sh:severity`,
+and annotated with the competency question each one serves.
+
+- **`shapes/cat-risk-shapes.ttl`** — the SHACL shapes graph (eight node shapes).
+- **`shapes/cro_shapes.py`** — builder that regenerates the shapes graph.
+- **`shapes/cro_shapes.md`** — design document (competency questions, shape catalogue, and
+  validation results).
+
+The example knowledge graph conforms to these shapes (zero violations, zero warnings).
+Validate it with [`pyshacl`](https://github.com/RDFLib/pySHACL):
+
+```bash
+pip install pyshacl
+pyshacl -s shapes/cat-risk-shapes.ttl \
+        "LLM integration (chat with data)/cat-ontology example knowledge graph.ttl"
+```
+
 ---
 
 ## Suggested environment
@@ -273,4 +301,4 @@ the Year Loss Table are synthetic.
 
 ---
 
-*README last updated: 2026-09-05.*
+*README last updated: 2026-09-26.*
